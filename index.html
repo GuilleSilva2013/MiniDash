@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mini Dash (Canvas)</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="topbar">
+        <div class="title">Mini Dash</div>
+        <div class="hud">
+          <div class="hudItem"><span class="label">Puntos</span> <span id="score">0</span></div>
+          <div class="hudItem"><span class="label">Nivel</span> <span id="level">1/12</span></div>
+          <div class="hudItem"><span class="label">Récord</span> <span id="best">0</span></div>
+        </div>
+      </header>
+
+      <div class="stage" role="application" aria-label="Juego tipo Geometry Dash">
+        <canvas id="game" width="960" height="540"></canvas>
+        <div id="overlay" class="overlay" aria-live="polite"></div>
+        <div id="levelBanner" class="levelBanner" aria-hidden="true"></div>
+      </div>
+
+      <section class="iconsSection" aria-label="Seleccion de iconos">
+        <div class="iconsHeader">
+          <h2>Elige tu icono</h2>
+          <p id="iconsProgress" class="iconsProgress"></p>
+        </div>
+        <div id="iconGrid" class="iconGrid"></div>
+      </section>
+
+      <footer class="help">
+        <span><b>Iniciar:</b> Enter</span>
+        <span><b>Saltar:</b> Espacio / Click / Toque</span>
+        <span><b>Rewind:</b> Mantén Q (max 10s)</span>
+        <span><b>Reiniciar:</b> R</span>
+      </footer>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
