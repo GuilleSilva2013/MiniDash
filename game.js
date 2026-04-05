@@ -10,6 +10,7 @@
   const levelBannerEl = document.getElementById("levelBanner");
   const iconGridEl = document.getElementById("iconGrid");
   const iconsProgressEl = document.getElementById("iconsProgress");
+  const hardModeBtn = document.getElementById("hardModeBtn");
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
@@ -17,6 +18,7 @@
   const PROGRESS_STORAGE_KEY = "mini-dash-completed-levels";
   const ICON_STORAGE_KEY = "mini-dash-selected-icon";
   const DEATHS_STORAGE_KEY = "mini-dash-death-count";
+  const HARD_MODE_STORAGE_KEY = "mini-dash-hard-mode";
 
   const loadBest = () => {
     const raw = localStorage.getItem(BEST_STORAGE_KEY);
@@ -42,6 +44,9 @@
   };
   const saveDeathCount = (n) => localStorage.setItem(DEATHS_STORAGE_KEY, String(n));
 
+  const loadHardMode = () => localStorage.getItem(HARD_MODE_STORAGE_KEY) === "true";
+  const saveHardMode = (enabled) => localStorage.setItem(HARD_MODE_STORAGE_KEY, String(enabled));
+
   const state = {
     mode: /** @type {"ready"|"playing"|"dead"|"won"} */ ("ready"),
     t: 0,
@@ -54,6 +59,7 @@
     completedLevels: 0,
     deathCount: 0,
     selectedIconId: "classic",
+    hardMode: false,
   };
 
   const REWIND_SECONDS = 10;
@@ -849,6 +855,12 @@
     renderIconPicker();
   };
 
+  const toggleHardMode = () => {
+    state.hardMode = !state.hardMode;
+    saveHardMode(state.hardMode);
+    updateHud();
+  };
+
   const markLevelCompleted = (completedCount) => {
     const nextValue = clamp(completedCount, 0, LEVELS.length);
     if (nextValue <= state.completedLevels) return;
@@ -869,6 +881,7 @@
 
   state.completedLevels = clamp(loadCompletedLevels(), 0, LEVELS.length);
   state.deathCount = Math.max(0, loadDeathCount());
+  state.hardMode = loadHardMode();
   state.selectedIconId = loadSelectedIcon();
   if (!ICONS.some((icon) => icon.id === state.selectedIconId)) {
     state.selectedIconId = ICONS[0].id;
@@ -888,6 +901,10 @@
       if (!iconId) return;
       selectIcon(iconId);
     });
+  }
+
+  if (hardModeBtn) {
+    hardModeBtn.addEventListener("click", toggleHardMode);
   }
 
   const aabbOverlap = (a, b) =>
@@ -1111,6 +1128,9 @@
     scoreEl.textContent = String(Math.floor(state.score));
     levelEl.textContent = `${state.levelIndex + 1}/${LEVELS.length}`;
     bestEl.textContent = String(state.best);
+    if (hardModeBtn) {
+      hardModeBtn.textContent = `Modo Difícil: ${state.hardMode ? "On" : "Off"}`;
+    }
   };
 
   const speedAt = (levelTime, baseSpeed, maxSpeed) => {
@@ -1122,7 +1142,8 @@
 
   const currentSpeed = () => {
     const level = LEVELS[state.levelIndex];
-    return speedAt(state.levelTime, level.baseSpeed, level.maxSpeed);
+    const multiplier = state.hardMode ? 1.3 : 1;
+    return speedAt(state.levelTime, level.baseSpeed * multiplier, level.maxSpeed * multiplier);
   };
 
   const jump = () => {
@@ -1259,6 +1280,8 @@
   canvas.addEventListener("pointerup", onPointerUp, { passive: true });
   canvas.addEventListener("pointercancel", onPointerUp, { passive: true });
   canvas.addEventListener("pointerleave", onPointerUp, { passive: true });
+
+  updateHud();
 
   const drawBackground = (t, level) => {
     const theme = level.theme || "neon-city";
