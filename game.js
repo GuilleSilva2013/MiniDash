@@ -1263,7 +1263,7 @@
     }
   };
 
-  const start = () => {
+  function start() {
     state.mode = "playing";
     setOverlay(null);
     resetRun(true);
@@ -1271,7 +1271,7 @@
     updateMenu();
     // Short startup blip to confirm audio context is actually unlocked.
     playTone(660, 0.1, "triangle");
-  };
+  }
 
   const die = () => {
     state.mode = "dead";
