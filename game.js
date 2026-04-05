@@ -8,6 +8,9 @@
   const bestEl = document.getElementById("best");
   const overlayEl = document.getElementById("overlay");
   const levelBannerEl = document.getElementById("levelBanner");
+  const menuEl = document.getElementById("menu");
+  const startBtn = document.getElementById("startBtn");
+  const menuHardModeBtn = document.getElementById("menuHardModeBtn");
   const iconGridEl = document.getElementById("iconGrid");
   const iconsProgressEl = document.getElementById("iconsProgress");
   const hardModeBtn = document.getElementById("hardModeBtn");
@@ -986,6 +989,14 @@
     hardModeBtn.addEventListener("click", toggleHardMode);
   }
 
+  if (startBtn) {
+    startBtn.addEventListener("click", start);
+  }
+
+  if (menuHardModeBtn) {
+    menuHardModeBtn.addEventListener("click", toggleHardMode);
+  }
+
   const aabbOverlap = (a, b) =>
     a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
@@ -1203,6 +1214,15 @@
     overlayEl.textContent = lines;
   };
 
+  const updateMenu = () => {
+    if (menuEl) {
+      menuEl.style.display = state.mode === "ready" ? "grid" : "none";
+    }
+    if (menuHardModeBtn) {
+      menuHardModeBtn.textContent = `Modo Difícil: ${state.hardMode ? "On" : "Off"}`;
+    }
+  };
+
   const updateHud = () => {
     scoreEl.textContent = String(Math.floor(state.score));
     levelEl.textContent = `${state.levelIndex + 1}/${LEVELS.length}`;
@@ -1210,6 +1230,7 @@
     if (hardModeBtn) {
       hardModeBtn.textContent = `Modo Difícil: ${state.hardMode ? "On" : "Off"}`;
     }
+    updateMenu();
   };
 
   const speedAt = (levelTime, baseSpeed, maxSpeed) => {
@@ -1247,6 +1268,7 @@
     setOverlay(null);
     resetRun(true);
     recordSnapshot();
+    updateMenu();
     // Short startup blip to confirm audio context is actually unlocked.
     playTone(660, 0.1, "triangle");
   };
