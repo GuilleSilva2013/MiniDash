@@ -1780,6 +1780,130 @@
       ctx.stroke();
     }
 
+    if (icon.style === "hardbolt") {
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(18, 6);
+      ctx.lineTo(12, 24);
+      ctx.lineTo(22, 24);
+      ctx.lineTo(14, 42);
+      ctx.lineTo(28, 18);
+      ctx.lineTo(18, 18);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.strokeStyle = "rgba(255,255,255,0.4)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(20, 10);
+      ctx.lineTo(14, 26);
+      ctx.lineTo(22, 26);
+      ctx.lineTo(16, 38);
+      ctx.stroke();
+    }
+
+    if (icon.style === "hardhazard") {
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(6, 6, player.w - 12, player.h - 12);
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 4;
+      for (let i = 6; i < player.w - 6; i += 10) {
+        ctx.beginPath();
+        ctx.moveTo(i, 6);
+        ctx.lineTo(i - 6, player.h - 6);
+        ctx.stroke();
+      }
+    }
+
+    if (icon.style === "hardcrown") {
+      ctx.fillStyle = "rgba(0,0,0,0.18)";
+      ctx.fillRect(6, 6, player.w - 12, player.h - 12);
+      ctx.fillStyle = icon.accent;
+      ctx.beginPath();
+      ctx.moveTo(8, 24);
+      ctx.lineTo(14, 12);
+      ctx.lineTo(18, 26);
+      ctx.lineTo(22, 14);
+      ctx.lineTo(26, 28);
+      ctx.lineTo(30, 14);
+      ctx.lineTo(34, 26);
+      ctx.lineTo(38, 12);
+      ctx.lineTo(44, 24);
+      ctx.lineTo(44, 34);
+      ctx.lineTo(8, 34);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    if (icon.style === "hardnebula") {
+      ctx.fillStyle = "rgba(255,255,255,0.16)";
+      ctx.beginPath();
+      ctx.arc(22, 22, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(22, 22, 14, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      ctx.beginPath();
+      ctx.arc(12, 14, 2.5, 0, Math.PI * 2);
+      ctx.arc(34, 18, 2.5, 0, Math.PI * 2);
+      ctx.arc(24, 32, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (icon.style === "hardglitch") {
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(6, 6, player.w - 12, player.h - 12);
+      ctx.fillStyle = icon.accent;
+      ctx.fillRect(8, 10, 10, 4);
+      ctx.fillRect(18, 18, 16, 4);
+      ctx.fillRect(10, 28, 14, 4);
+      ctx.fillRect(20, 34, 12, 4);
+      ctx.fillStyle = "rgba(255,255,255,0.3)";
+      ctx.fillRect(14, 14, 8, 3);
+      ctx.fillRect(22, 26, 6, 3);
+    }
+
+    if (icon.style === "hardinferno") {
+      ctx.fillStyle = "rgba(0,0,0,0.18)";
+      ctx.fillRect(6, 6, player.w - 12, player.h - 12);
+      ctx.fillStyle = "#ffcc44";
+      ctx.beginPath();
+      ctx.moveTo(22, 10);
+      ctx.lineTo(27, 24);
+      ctx.lineTo(23, 20);
+      ctx.lineTo(25, 32);
+      ctx.lineTo(22, 28);
+      ctx.lineTo(19, 34);
+      ctx.lineTo(20, 24);
+      ctx.lineTo(17, 22);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    if (icon.style === "hardsaturn") {
+      ctx.fillStyle = "rgba(255,255,255,0.16)";
+      ctx.beginPath();
+      ctx.arc(22, 22, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.ellipse(22, 22, 18, 7, -0.4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(10, 12);
+      ctx.lineTo(34, 32);
+      ctx.strokeStyle = "rgba(255,255,255,0.45)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
     if (icon.style === "comet") {
       ctx.fillStyle = "rgba(255,255,255,0.18)";
       ctx.beginPath();
