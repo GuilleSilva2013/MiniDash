@@ -14,6 +14,7 @@
   const iconGridEl = document.getElementById("iconGrid");
   const iconsProgressEl = document.getElementById("iconsProgress");
   const hardModeBtn = document.getElementById("hardModeBtn");
+  const helpEl = document.querySelector(".help");
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
@@ -1220,6 +1221,9 @@
     }
     if (menuHardModeBtn) {
       menuHardModeBtn.textContent = `Modo Difícil: ${state.hardMode ? "On" : "Off"}`;
+    }
+    if (helpEl) {
+      helpEl.style.display = state.mode === "ready" ? "none" : "flex";
     }
   };
 
