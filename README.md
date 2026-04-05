@@ -4,6 +4,8 @@ Juego simple estilo Geometry Dash: el cubo avanza solo y tienes que saltar obst�
 
 Hecho solo para fines educativos.
 
+Incluye un **modo difícil** que aumenta la velocidad de los niveles para un desafío mayor.
+
 Los bloques cuadrados funcionan como plataformas: puedes caer sobre ellos sin morir.
 
 Incluye **12 niveles** con patrones de obstáculos predefinidos. Al terminar el último nivel, aparece la pantalla de victoria y puedes reiniciar.
@@ -60,6 +62,13 @@ Opción C (App de escritorio Windows):
 - Frost: se desbloquea al completar 10 niveles
 - Snowflake: se desbloquea al completar 11 niveles
 - Ice Core: se desbloquea al completar los 12 niveles
+- Hard Bolt: se desbloquea al completar 1 nivel en modo difícil
+- Hard Hazard: se desbloquea al completar 3 niveles en modo difícil
+- Hard Crown: se desbloquea al completar 5 niveles en modo difícil
+- Hard Nebula: se desbloquea al completar 7 niveles en modo difícil
+- Hard Glitch: se desbloquea al completar 9 niveles en modo difícil
+- Hard Inferno: se desbloquea al completar 11 niveles en modo difícil
+- Hard Saturn: se desbloquea al completar los 12 niveles en modo difícil
 - Last Stand: se desbloquea al perder 20 veces
 
 Nota de audio:

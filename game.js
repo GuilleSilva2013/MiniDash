@@ -19,6 +19,7 @@
   const ICON_STORAGE_KEY = "mini-dash-selected-icon";
   const DEATHS_STORAGE_KEY = "mini-dash-death-count";
   const HARD_MODE_STORAGE_KEY = "mini-dash-hard-mode";
+  const HARD_MODE_COMPLETED_STORAGE_KEY = "mini-dash-hard-mode-completed";
 
   const loadBest = () => {
     const raw = localStorage.getItem(BEST_STORAGE_KEY);
@@ -47,6 +48,13 @@
   const loadHardMode = () => localStorage.getItem(HARD_MODE_STORAGE_KEY) === "true";
   const saveHardMode = (enabled) => localStorage.setItem(HARD_MODE_STORAGE_KEY, String(enabled));
 
+  const loadHardModeCompletedLevels = () => {
+    const raw = localStorage.getItem(HARD_MODE_COMPLETED_STORAGE_KEY);
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : 0;
+  };
+  const saveHardModeCompletedLevels = (n) => localStorage.setItem(HARD_MODE_COMPLETED_STORAGE_KEY, String(n));
+
   const state = {
     mode: /** @type {"ready"|"playing"|"dead"|"won"} */ ("ready"),
     t: 0,
@@ -60,6 +68,7 @@
     deathCount: 0,
     selectedIconId: "classic",
     hardMode: false,
+    hardModeCompletedLevels: 0,
   };
 
   const REWIND_SECONDS = 10;
@@ -790,12 +799,71 @@
       accent: "#6f52a8",
       style: "laststand",
     },
+    {
+      id: "hardbolt",
+      name: "Hard Bolt",
+      unlockAfterHardModeLevels: 1,
+      base: "#ff4444",
+      accent: "#aa0000",
+      style: "hardbolt",
+    },
+    {
+      id: "hardhazard",
+      name: "Hard Hazard",
+      unlockAfterHardModeLevels: 3,
+      base: "#ff8844",
+      accent: "#aa4400",
+      style: "hardhazard",
+    },
+    {
+      id: "hardcrown",
+      name: "Hard Crown",
+      unlockAfterHardModeLevels: 5,
+      base: "#ffff44",
+      accent: "#aaaa00",
+      style: "hardcrown",
+    },
+    {
+      id: "hardnebula",
+      name: "Hard Nebula",
+      unlockAfterHardModeLevels: 7,
+      base: "#8844ff",
+      accent: "#4400aa",
+      style: "hardnebula",
+    },
+    {
+      id: "hardglitch",
+      name: "Hard Glitch",
+      unlockAfterHardModeLevels: 9,
+      base: "#44ff88",
+      accent: "#00aa44",
+      style: "hardglitch",
+    },
+    {
+      id: "hardinferno",
+      name: "Hard Inferno",
+      unlockAfterHardModeLevels: 11,
+      base: "#ff4444",
+      accent: "#aa0000",
+      style: "hardinferno",
+    },
+    {
+      id: "hardsaturn",
+      name: "Hard Saturn",
+      unlockAfterHardModeLevels: 12,
+      base: "#44ffff",
+      accent: "#00aaaa",
+      style: "hardsaturn",
+    },
   ];
 
   const getIconById = (iconId) => ICONS.find((icon) => icon.id === iconId) || ICONS[0];
   const isIconUnlocked = (icon) => {
     if (typeof icon.unlockAfterDeaths === "number") {
       return state.deathCount >= icon.unlockAfterDeaths;
+    }
+    if (typeof icon.unlockAfterHardModeLevels === "number") {
+      return state.hardModeCompletedLevels >= icon.unlockAfterHardModeLevels;
     }
     return state.completedLevels >= icon.unlockAfter;
   };
@@ -804,7 +872,7 @@
   const updateIconsProgress = () => {
     if (!iconsProgressEl) return;
     iconsProgressEl.textContent =
-      `Niveles completados: ${state.completedLevels}/${LEVELS.length} | Derrotas: ${state.deathCount}`;
+      `Niveles completados: ${state.completedLevels}/${LEVELS.length} | Derrotas: ${state.deathCount} | Difícil: ${state.hardModeCompletedLevels}`;
   };
 
   const renderIconPicker = () => {
@@ -836,6 +904,8 @@
         meta.textContent = "Desbloqueado";
       } else if (typeof icon.unlockAfterDeaths === "number") {
         meta.textContent = `Pierde ${icon.unlockAfterDeaths} veces (${state.deathCount}/${icon.unlockAfterDeaths})`;
+      } else if (typeof icon.unlockAfterHardModeLevels === "number") {
+        meta.textContent = `Completa ${icon.unlockAfterHardModeLevels} nivel${icon.unlockAfterHardModeLevels === 1 ? "" : "es"} en difícil (${state.hardModeCompletedLevels}/${icon.unlockAfterHardModeLevels})`;
       } else {
         meta.textContent = `Completa ${icon.unlockAfter} nivel${icon.unlockAfter === 1 ? "" : "es"}`;
       }
@@ -868,6 +938,14 @@
     state.completedLevels = nextValue;
     saveCompletedLevels(state.completedLevels);
 
+    if (state.hardMode) {
+      const hardNextValue = clamp(completedCount, 0, LEVELS.length);
+      if (hardNextValue > state.hardModeCompletedLevels) {
+        state.hardModeCompletedLevels = hardNextValue;
+        saveHardModeCompletedLevels(state.hardModeCompletedLevels);
+      }
+    }
+
     // Fallback when selected icon is still locked.
     const selected = getIconById(state.selectedIconId);
     if (!isIconUnlocked(selected)) {
@@ -882,6 +960,7 @@
   state.completedLevels = clamp(loadCompletedLevels(), 0, LEVELS.length);
   state.deathCount = Math.max(0, loadDeathCount());
   state.hardMode = loadHardMode();
+  state.hardModeCompletedLevels = Math.max(0, loadHardModeCompletedLevels());
   state.selectedIconId = loadSelectedIcon();
   if (!ICONS.some((icon) => icon.id === state.selectedIconId)) {
     state.selectedIconId = ICONS[0].id;
