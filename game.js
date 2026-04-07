@@ -940,11 +940,11 @@
     renderIconPicker();
   };
 
-  const toggleHardMode = () => {
+  function toggleHardMode() {
     state.hardMode = !state.hardMode;
     saveHardMode(state.hardMode);
     updateHud();
-  };
+  }
 
   const markLevelCompleted = (completedCount) => {
     const nextValue = clamp(completedCount, 0, LEVELS.length);
