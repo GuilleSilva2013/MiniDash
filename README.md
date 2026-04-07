@@ -69,6 +69,7 @@ Opción C (App de escritorio Windows):
 - Hard Glitch: se desbloquea al completar 9 niveles en modo difícil
 - Hard Inferno: se desbloquea al completar 11 niveles en modo difícil
 - Hard Saturn: se desbloquea al completar los 12 niveles en modo difícil
+- Secreto: se desbloquea al hacer click en el título del menú principal
 - Last Stand: se desbloquea al perder 20 veces
 
 Nota de audio:

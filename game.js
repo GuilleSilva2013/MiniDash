@@ -11,6 +11,7 @@
   const menuEl = document.getElementById("menu");
   const startBtn = document.getElementById("startBtn");
   const menuHardModeBtn = document.getElementById("menuHardModeBtn");
+  const menuTitleEl = document.querySelector(".menuTitle");
   const iconGridEl = document.getElementById("iconGrid");
   const iconsProgressEl = document.getElementById("iconsProgress");
   const hardModeBtn = document.getElementById("hardModeBtn");
@@ -861,6 +862,14 @@
       accent: "#00aaaa",
       style: "hardsaturn",
     },
+    {
+      id: "secret",
+      name: "Secreto",
+      unlockAfterSecretClick: true,
+      base: "#ff00ff",
+      accent: "#aa00aa",
+      style: "secret",
+    },
   ];
 
   const getIconById = (iconId) => ICONS.find((icon) => icon.id === iconId) || ICONS[0];
@@ -999,6 +1008,18 @@
 
   if (menuHardModeBtn) {
     menuHardModeBtn.addEventListener("click", toggleHardMode);
+  }
+
+  if (menuTitleEl) {
+    menuTitleEl.addEventListener("click", () => {
+      if (!state.secretClick) {
+        state.secretClick = true;
+        saveSecretClick(true);
+        renderIconPicker();
+        // Pequeño efecto visual o sonido
+        playTone(880, 0.2, "sine");
+      }
+    });
   }
 
   const aabbOverlap = (a, b) =>
@@ -1931,6 +1952,25 @@
       ctx.strokeStyle = "rgba(255,255,255,0.45)";
       ctx.lineWidth = 2;
       ctx.stroke();
+    }
+
+    if (icon.style === "secret") {
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.fillRect(6, 6, player.w - 12, player.h - 12);
+      ctx.strokeStyle = icon.accent;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(22, 22, 12, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = icon.accent;
+      ctx.beginPath();
+      ctx.arc(22, 22, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.beginPath();
+      ctx.arc(18, 18, 2, 0, Math.PI * 2);
+      ctx.arc(26, 18, 2, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     if (icon.style === "comet") {
