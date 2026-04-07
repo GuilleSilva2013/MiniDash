@@ -24,6 +24,7 @@
   const DEATHS_STORAGE_KEY = "mini-dash-death-count";
   const HARD_MODE_STORAGE_KEY = "mini-dash-hard-mode";
   const HARD_MODE_COMPLETED_STORAGE_KEY = "mini-dash-hard-mode-completed";
+  const SECRET_CLICK_STORAGE_KEY = "mini-dash-secret-click";
 
   const loadBest = () => {
     const raw = localStorage.getItem(BEST_STORAGE_KEY);
@@ -73,6 +74,7 @@
     selectedIconId: "classic",
     hardMode: false,
     hardModeCompletedLevels: 0,
+    secretClick: false,
   };
 
   const REWIND_SECONDS = 10;
@@ -965,6 +967,7 @@
   state.deathCount = Math.max(0, loadDeathCount());
   state.hardMode = loadHardMode();
   state.hardModeCompletedLevels = Math.max(0, loadHardModeCompletedLevels());
+  state.secretClick = loadSecretClick();
   state.selectedIconId = loadSelectedIcon();
   if (!ICONS.some((icon) => icon.id === state.selectedIconId)) {
     state.selectedIconId = ICONS[0].id;
